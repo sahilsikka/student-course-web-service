@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+<changeSet author="sahil" id="security-infrastructure-1">
+
+        <createTable tableName="student">
+            <column name="id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="Name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+
+    <createTable tableName="Fees">
+        <column name="txn_Id" type="Integer">
+            <constraints primaryKey="true"></constraints>
+        </column>
+        <column name="student_name" type="varchar(255)" >
+            <constraints nullable="false"></constraints>
+        </column>
+
+        <column name="fees" type="int"></column>
+    </createTable>
+
+    <createTable tableName="courses">
+        <column name="id" type="varchar(255)">
+            <constraints primaryKey="true"/>
+        </column>
+        <column name="name" type="varchar(255)"></column>
+        <column name="description" type="varchar(255)"></column>
+    </createTable>
+
+    <createTable tableName="student_courses">
+        <column name="student_id" type="varchar(255)"></column>
+        <column name="course_id" type="varchar(255)"></column>
+    </createTable>
+
+
+    <addForeignKeyConstraint baseTableName="student_courses" baseColumnNames="student_id" constraintName="student_mapping" referencedTableName="student"
+                             referencedColumnNames="id"></addForeignKeyConstraint>
+    <addForeignKeyConstraint baseTableName="student_courses" baseColumnNames="course_id" constraintName="course_mapping" referencedTableName="courses"
+                             referencedColumnNames="id"></addForeignKeyConstraint>
+
+    </changeSet>
+    <changeSet author="liquibase-docs" id="createSequence-example">
+        <createSequence catalogName="cat"
+                        cycle="true"
+                        incrementBy="1"
+                        ordered="true"
+                        schemaName="public"
+                        sequenceName="USER_SEQ"
+                        startValue="5"/>
+    </changeSet>
+</databaseChangeLog>
